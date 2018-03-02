@@ -99,7 +99,10 @@ func getConcreteContainerInnerType(in reflect.Type) (inInnerWasPointer bool, inI
 }
 
 func getConcreteReflectValueAndType(in interface{}) (reflect.Value, reflect.Type) {
-	value := reflect.ValueOf(in)
+	value, ok := in.(reflect.Value)
+	if !ok {
+		value = reflect.ValueOf(in)
+	}
 	if value.Kind() == reflect.Ptr {
 		value = value.Elem()
 	}
