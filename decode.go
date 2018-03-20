@@ -81,8 +81,8 @@ func mismatchStructFields(structInfo []fieldInfo, headers []string) []string {
 	return missing
 }
 
-func mismatchHeaderFields(structInfo []fieldInfo, headers []string) []string {
-	missing := make([]string, 0)
+func mismatchHeaderFields(structInfo []fieldInfo, headers []string) map[int]string {
+	missing := make(map[int]string)
 	if len(headers) == 0 {
 		return missing
 	}
@@ -94,9 +94,9 @@ func mismatchHeaderFields(structInfo []fieldInfo, headers []string) []string {
 		}
 	}
 
-	for _, header := range headers {
+	for i, header := range headers {
 		if _, ok := keyMap[header]; !ok {
-			missing = append(missing, header)
+			missing[i] = header
 		}
 	}
 	return missing
